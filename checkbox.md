@@ -27,10 +27,13 @@
   - [ ] filter only day
 - [ ]
 
-### Detail
+### AnimePage
 
-- [ ] Mercury
-- [x] Venus
+- [ ] Description
+- [x] Rating
+- [ ] Comments
+- [ ] Likes
+- [ ] Reply
 
 ### Bookmark
 

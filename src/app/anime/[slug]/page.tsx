@@ -6,6 +6,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
 import { cookies } from "next/headers";
+import Image from "next/image";
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const cookieStore = cookies();
@@ -50,8 +51,17 @@ export default async function Page({ params }: { params: { slug: string } }) {
       <NewComment anime_id={params.slug} />
       {comments?.map((comment) => (
         <div key={comment.id}>
-          <p>{comment.profiles.name} </p>
-          <p>{comment.profiles.username}</p>
+          <div className="h-12 w-12">
+            <Image
+              className="rounded-full"
+              src={comment.profiles.avatar_url}
+              alt="comment user avatar"
+              width={48}
+              height={48}
+            />
+          </div>
+          <p className="inline-block">{comment.profiles.name} </p>
+          <p className="inline-block">{comment.profiles.username}</p>
           <p>{dayjs(comment.created_at).fromNow()}</p>
           <p>{comment.title}</p>
           <form action={handleDelete}>
