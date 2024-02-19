@@ -11,6 +11,9 @@ import Image from "next/image";
 export default async function Page({ params }: { params: { slug: string } }) {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   let { data: anime, error: animeError } = await supabase
     .from("anime")
     .select("*")
@@ -48,7 +51,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
       <h1>{anime?.[0].title}</h1>
       <p>{anime?.[0].url}</p>
       <p>{anime?.[0].rating}</p>
+
       <NewComment anime_id={params.slug} />
+
       {comments?.map((comment) => (
         <div key={comment.id}>
           <div className="h-12 w-12">
@@ -64,12 +69,20 @@ export default async function Page({ params }: { params: { slug: string } }) {
           <p className="inline-block">{comment.profiles.username}</p>
           <p>{dayjs(comment.created_at).fromNow()}</p>
           <p>{comment.title}</p>
-          <form action={handleDelete}>
-            <input name="itemId" className="hidden" defaultValue={comment.id} />
-            <button type="submit" className="text-red-600">
-              Delete
-            </button>
-          </form>
+          {user && comment.profiles.id === user.id ? (
+            <form action={handleDelete}>
+              <input
+                name="itemId"
+                className="hidden"
+                defaultValue={comment.id}
+              />
+              <button type="submit" className="text-red-600">
+                Delete
+              </button>
+            </form>
+          ) : (
+            <></>
+          )}
         </div>
       ))}
     </>
