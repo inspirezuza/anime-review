@@ -21,6 +21,6 @@ const config: Config = {
     },
   },
   darkMode: "class",
-  plugins: [require("flowbite/plugin"), nextui()],
+  plugins: [nextui()],
 };
 export default config;
