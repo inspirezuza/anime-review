@@ -4,6 +4,8 @@ import CommentLike from "@/app/components/CommentLike";
 import Image from "next/image";
 import { cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
+import { useRouter } from "next/navigation";
+import CommentDelete from "./CommentDelete";
 
 dayjs.extend(relativeTime);
 
@@ -37,7 +39,8 @@ export default function AnimeComments({ comments }: { comments: any[] }) {
             ).fromNow()}`}
           </p>
           <p>{comment.title}</p>
-          {comment.isAuthor ? (
+          <CommentDelete comment={comment} />
+          {/* {comment.isAuthor ? (
             <form action={handleDelete}>
               <input
                 name="itemId"
@@ -50,7 +53,7 @@ export default function AnimeComments({ comments }: { comments: any[] }) {
             </form>
           ) : (
             <></>
-          )}
+          )} */}
 
           <CommentLike comment={comment} />
         </div>
