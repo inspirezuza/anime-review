@@ -12,6 +12,7 @@
     "@nextui-org/react": "^2.2.9",
     "@supabase/ssr": "^0.1.0",
     "@supabase/supabase-js": "^2.39.6",
+    "dayjs": "^1.11.10",
     "dotenv": "^16.4.4",
     "flowbite": "^2.3.0",
     "flowbite-react": "^0.7.2",
