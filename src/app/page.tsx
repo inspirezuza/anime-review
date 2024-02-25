@@ -15,12 +15,10 @@ import {
 import { IoIosSearch } from "react-icons/io";
 import { GoAlert } from "react-icons/go";
 import { useDebouncedCallback } from "use-debounce";
-
 import { useEffect, useState } from "react";
-// import { createClient } from "@supabase/supabase-js";
 import { Pagination } from "@nextui-org/react";
-
 import Card from "./components/card";
+import FilterModal from "./components/filtermodal";
 import { createClient } from "@/utils/supabase/client";
 // const supabase = createClient(
 //   "https://ljalvqncjekbwpdnzaby.supabase.co",
@@ -32,10 +30,10 @@ export default function Home() {
   const [genre, setGenre] = useState<any>([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [searchtext, setSearchText] = useState<string>("");
-  const [showmodal, setShowmodal] = useState<boolean>(false);
   const [anime, setAnime] = useState<any>([]);
   const [nsfw, setNSFW] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
+  const [filters, setFilter] = useState<any>([]);
   const [totalpage, setTotalPage] = useState<number>(1);
 
   const fetchAnime = async () => {
@@ -46,12 +44,21 @@ export default function Home() {
         count,
       } = await supabase
         .from("anime")
-        .select("*")
+        .select(
+          `*,
+        anime-genre(anime_id,Genre_id),genre!inner(id,genrename) `,
+          {
+            count: "exact",
+          }
+        )
         .ilike("title", "%" + searchtext + "%")
         .like("broadcastday", day)
-        .range(0 * (page - 1), 10 * page - 1);
+        .in(
+          "genre.id",
+          filters.length != 0 ? filters : Array.from(Array(25).keys())
+        )
+        .range(10 * (page - 1), 10 * page - 1);
       setAnime(anime);
-      console.log(count);
       setTotalPage(Math.ceil((count as number) / 10));
     } else {
       let {
@@ -60,31 +67,54 @@ export default function Home() {
         count,
       } = await supabase
         .from("anime")
-        .select("*", { count: "exact" })
+        .select(
+          `*,
+        anime-genre(anime_id,Genre_id),genre!inner(id,genrename) `,
+          {
+            count: "exact",
+          }
+        )
         .ilike("title", "%" + searchtext + "%")
         .eq("SFW", true)
         .like("broadcastday", day)
+        .in(
+          "genre.id",
+          filters.length != 0 ? filters : Array.from(Array(25).keys())
+        )
         .range(10 * (page - 1), 10 * page - 1);
-      console.log(count);
       setAnime(anime);
       setTotalPage(Math.ceil((count as number) / 10));
     }
   };
-
+  const fetchJoin = async () => {
+    let { data: genre, error } = await supabase
+      .from("anime")
+      .select(
+        `*,
+    anime-genre(anime_id,Genre_id),genre!inner(id,genrename)`
+      )
+      .in(
+        `genre.id`,
+        filters.length != 0 ? filters : Array.from(Array(25).keys())
+      )
+      .range(0, 10);
+  };
   const fetchGenre = async () => {
     let { data: genre, error } = await supabase.from("genre").select("*");
-    console.log(genre);
     setGenre(genre);
-    console.log("genre :", genre);
   };
   const searchAnime = useDebouncedCallback(() => {
-    console.log(searchtext);
     fetchAnime();
   }, 300);
   useEffect(() => {
     fetchAnime();
     fetchGenre();
-  }, [day, nsfw, page]);
+  }, [day, nsfw, page, filters]);
+  const setFilterGenre = (id: number) => {
+    if (filters.includes(id)) {
+      setFilter(filters.filter((f: number) => f !== id));
+    } else setFilter([...filters, id]);
+  };
   return (
     <>
       <div className="w-screen bg-black max-w-screen overflow-x-hidden">
@@ -92,6 +122,7 @@ export default function Home() {
           <Button variant="flat" className="capitalize" onPress={onOpen}>
             Filter
           </Button>
+          <Button onPress={fetchJoin}>fetch</Button>
         </div>
 
         <div className="flex justify-center flex-col items-center">
@@ -112,7 +143,10 @@ export default function Home() {
             <div className="flex flex-wrap gap-3 w-full max-w-screen overflow-auto my-[1rem]">
               <Tabs
                 selectedKey={day}
-                onSelectionChange={(key) => setDay(key as string)}
+                onSelectionChange={(key) => {
+                  setDay(key as string);
+                  setPage(1);
+                }}
                 aria-label="Tabs colors"
                 variant="solid"
                 radius="none"
@@ -159,38 +193,15 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <Modal
-        size="lg"
-        isOpen={isOpen}
+      <FilterModal
+        nsfw={nsfw}
         onClose={onClose}
-        disableAnimation={true}
-        placement="center"
-        backdrop="blur"
-      >
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalBody>
-                <Switch
-                  isSelected={nsfw}
-                  onValueChange={setNSFW}
-                  color="danger"
-                >
-                  <p className="text-primary">NSFW</p>
-                </Switch>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Close
-                </Button>
-                <Button color="primary" onPress={onClose}>
-                  Done
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+        isOpen={isOpen}
+        setNSFW={setNSFW}
+        genres={genre}
+        filters={filters}
+        setFilter={setFilterGenre}
+      ></FilterModal>
     </>
   );
 }
