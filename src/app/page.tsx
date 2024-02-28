@@ -117,7 +117,7 @@ export default function Home() {
   };
   return (
     <>
-      <div className="w-screen bg-black max-w-screen overflow-x-hidden">
+      <div className="w-screen bg-black max-w-screen overflow-x-hidden overflow-y-auto">
         <div className="w-screen my-1 px-2 flex justify-end">
           <Button variant="flat" className="capitalize" onPress={onOpen}>
             Filter
@@ -163,7 +163,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="">
+        <div className="overflow-y-auto h-full">
           {anime &&
             anime.map((a: any, index: any) =>
               index % 2 != 0 ? null : (
@@ -181,7 +181,7 @@ export default function Home() {
                 </div>
               )
             )}
-          <div className="flex justify-center w-full">
+          <div className="flex justify-center w-full mb-[4rem]">
             <Pagination
               isCompact
               showControls
