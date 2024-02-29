@@ -122,7 +122,6 @@ export default function Home() {
           <Button variant="flat" className="capitalize" onPress={onOpen}>
             Filter
           </Button>
-          <Button onPress={fetchJoin}>fetch</Button>
         </div>
 
         <div className="flex justify-center flex-col items-center">
