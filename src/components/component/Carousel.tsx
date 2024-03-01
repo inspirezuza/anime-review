@@ -26,7 +26,7 @@ export default function Carousel() {
   }, []);
   return (
     <div>
-      <div className="h-[15rem] w-screen">
+      {/* <div className="h-[15rem] w-screen">
         {loading ? (
           <Carouselflow>
             <Image src="/carousel-1.svg" alt="..." width={800} height={800} />
@@ -46,7 +46,7 @@ export default function Carousel() {
             ))}
           </Carouselflow>
         )}
-      </div>
+      </div> */}
       <div className="w-screen">
         <div>Top Rating</div>
         {!loading &&

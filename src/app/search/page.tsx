@@ -17,8 +17,8 @@ import { GoAlert } from "react-icons/go";
 import { useDebouncedCallback } from "use-debounce";
 import { useEffect, useState } from "react";
 import { Pagination } from "@nextui-org/react";
-import Card from "../components/card";
-import FilterModal from "../components/filtermodal";
+import Card from "../../components/component/card";
+import FilterModal from "../../components/component/filtermodal";
 import { createClient } from "@/utils/supabase/client";
 // const supabase = createClient(
 //   "https://ljalvqncjekbwpdnzaby.supabase.co",

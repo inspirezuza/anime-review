@@ -1,6 +1,9 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
-import { GithubButton, LogoutButton } from "../components/AuthButton";
+import {
+  GithubButton,
+  LogoutButton,
+} from "../../components/component/AuthButton";
 import { redirect } from "next/navigation";
 
 export default async function LoginPage() {

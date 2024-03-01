@@ -1,5 +1,5 @@
-import AnimeComments from "@/app/components/AnimeComments";
-import NewComment from "@/app/components/NewComment";
+import AnimeComments from "@/components/component/AnimeComments";
+import NewComment from "@/components/component/NewComment";
 import { createClient } from "@/utils/supabase/server";
 
 import { cookies } from "next/headers";
