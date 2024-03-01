@@ -54,6 +54,7 @@ export default function FilterModal({
                 {genres &&
                   genres.map((genre) => (
                     <Button
+                      key={genre.id}
                       color={
                         filters?.includes(genre.id) ? "secondary" : "default"
                       }

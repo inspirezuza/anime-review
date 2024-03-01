@@ -29,10 +29,7 @@ export default function Carousel() {
       <div className="h-[15rem] w-screen">
         {loading ? (
           <Carouselflow>
-            <img
-              src="https://flowbite.com/docs/images/carousel/carousel-1.svg"
-              alt="..."
-            />
+            <Image src="/carousel-1.svg" alt="..." />
           </Carouselflow>
         ) : (
           <Carouselflow>
