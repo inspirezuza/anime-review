@@ -29,7 +29,7 @@ export default function Carousel() {
       <div className="h-[15rem] w-screen">
         {loading ? (
           <Carouselflow>
-            <Image src="/carousel-1.svg" alt="..." />
+            <Image src="/carousel-1.svg" alt="..." width={800} height={800} />
           </Carouselflow>
         ) : (
           <Carouselflow>
