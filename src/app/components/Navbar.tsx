@@ -57,8 +57,8 @@ export default function Bottomnavbar() {
             >
               <path
                 stroke="currentColor"
-                stroke-linecap="round"
-                stroke-width="3"
+                strokeLinecap="round"
+                strokeWidth="3"
                 d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
               />
             </svg>
@@ -88,9 +88,9 @@ export default function Bottomnavbar() {
             >
               <path
                 stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2.1"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2.1"
                 d="m17 21-5-4-5 4V3.9c0-.2 0-.5.2-.6l.6-.3h8.4c.2 0 .4 0 .6.3l.2.6V21Z"
               />
             </svg>

@@ -54,7 +54,10 @@ export default function Carousel() {
         <div>Top Rating</div>
         {!loading &&
           anime.map((anime: any, index: number) => (
-            <div className="grid grid-cols-2 mx-2 my-2 items-center">
+            <div
+              key={index}
+              className="grid grid-cols-2 mx-2 my-2 items-center"
+            >
               <div>
                 <div>
                   {index + 1}.{anime.title}
