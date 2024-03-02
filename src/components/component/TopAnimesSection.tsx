@@ -58,7 +58,6 @@ export default function TopAnimesSection({ animes }: any) {
                 <div className="relative h-48 w-32 mx-auto  rounded-lg">
                   <Image
                     src={anime.main_picture}
-                    objectFit="cover"
                     fill={true}
                     alt={anime.title}
                     className=" object-cover rounded-xl hover:opacity-80"
