@@ -2,10 +2,12 @@
 // import { useEffect, useState } from "react";
 // import { createClient } from "@/utils/supabase/client";
 import Image from "next/image";
+import { Ratings } from "./Ratings";
+import Link from "next/link";
 
 // const supabase = createClient();
 
-export default function TopTenSection({ animes }: any) {
+export default function TopAnimesSection({ animes }: any) {
   // const [anime, setAnime] = useState<any>([]);
   // const [loading, setLoading] = useState<boolean>(true);
 
@@ -24,7 +26,7 @@ export default function TopTenSection({ animes }: any) {
   // useEffect(() => {
   //   fetchAnime();
   // }, []);
-  console.log(animes);
+  // console.log(animes);
   return (
     <div>
       {/* <div className="h-[15rem] w-screen">
@@ -48,27 +50,39 @@ export default function TopTenSection({ animes }: any) {
           </Carouselflow>
         )}
       </div> */}
-      <div className="w-full ">
+      <div className="max-w-sm mx-auto animate-fade-up animate-ease-out">
         {animes.map((anime: any, index: number) => (
-          <div key={anime.id} className="flex m-4">
+          <div key={anime.id} className="flex justify-center mx-2 my-4 ">
             <div className="">
-              <Image
-                src={anime.main_picture}
-                width={100}
-                height={50}
-                alt={anime.title}
-                className=" object-cover rounded-md"
-              ></Image>
+              <Link href={`/anime/${anime.id}`}>
+                <div className="relative h-48 w-32 mx-auto  rounded-lg">
+                  <Image
+                    src={anime.main_picture}
+                    objectFit="cover"
+                    fill={true}
+                    alt={anime.title}
+                    className=" object-cover rounded-xl hover:opacity-80"
+                  ></Image>
+                </div>
+              </Link>
             </div>
-            <div>
+            <div className="flex flex-col justify-between px-4 w-full">
               <div>
-                {index + 1}.{anime.title}
+                <Link href={`/anime/${anime.id}`}>
+                  <div className="font-bold hover:underline">
+                    {index + 1}.{anime.title}
+                  </div>
+                </Link>
+                <div>Rating : {anime.rating}/10</div>
+                <Ratings size={20} rating={anime.rating / 2} variant="yellow" />
               </div>
-              <div>Rating : {anime.rating}</div>
-              <div className="flex text-gray-600 gap-2">
-                {anime.genre.map((genre: any) => (
-                  <div key={genre.id} className="flex">
-                    {`${genre.genrename}`}
+              <div className="text-gray-600 pb-2">
+                {anime.genre.map((genre: any, index: number) => (
+                  <div key={genre.id} className="inline-block">
+                    {genre.genrename}
+                    {index !== anime.genre.length - 1 && (
+                      <span className="pr-2"> · </span>
+                    )}
                   </div>
                 ))}
               </div>

@@ -16,26 +16,23 @@ export function CarouselPlugin({ animes }: any) {
   console.log(novelcount);
 
   return (
-    <Carousel className="px-4" opts={{ align: "start", loop: true }}>
+    <Carousel className="" opts={{ align: "center", loop: true }}>
       <CarouselContent>
         {/* {Array.from({ length: novelcount }).map((_, index) => ( */}
         {animes.map((anime: any, index: number) => (
-          <CarouselItem key={index} className="pl-2 basis-1/3">
+          <CarouselItem key={index} className="pl-2 basis-1/2">
             <div>
-              <Link href={`/novel/${index + 1}`}>
-                <div className="relative h-48 mx-auto">
+              <Link href={`/anime/${anime.id}`}>
+                <div className="relative h-64 w-48 mx-auto">
                   <Image
                     src={anime.main_picture}
                     alt="carousel image"
-                    // width={420}
-                    // height={600}
-                    objectFit="cover"
                     fill={true}
                     className="rounded-xl transition-transform transform hover:opacity-90"
                     priority={true}
                   />
                 </div>
-                <div className="line-clamp-2 text-center text-xs">
+                <div className="line-clamp-2 text-center text-md">
                   {anime.title}
                 </div>
               </Link>

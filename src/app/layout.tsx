@@ -18,8 +18,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className="max-w-sm mx-auto">
+    <html lang="en" className="">
+      <body className="">
         <Providers>{children}</Providers>
         <Bottomnavbar />
       </body>

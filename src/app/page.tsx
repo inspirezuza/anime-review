@@ -1,25 +1,54 @@
 import { CarouselPlugin } from "@/components/component/CarouselPlugin";
 import { cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
-import TopTenSection from "../components/component/TopTenSection";
+import { unstable_cache } from "next/cache";
+import TopAnimesSection from "../components/component/TopAnimesSection";
 
 export default async function Home() {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
-  let { data: animesTrending, error: errorTrending } = await supabase
-    .from("anime")
-    .select("*")
-    .eq("SFW", true)
-    .order("rating", { ascending: false })
-    .range(20, 29);
+  const fetchTrendingAnime = async () => {
+    let { data: animesTrending, error: errorTrending } = await supabase
+      .from("anime")
+      .select("*")
+      .eq("SFW", true)
+      .order("rating", { ascending: false })
+      .range(20, 29);
+    return animesTrending;
+  };
 
-  let { data: animesTopTen, error: errorTopTen } = await supabase
-    .from("anime")
-    .select("*,anime-genre(anime_id,Genre_id),genre(id,genrename)")
-    .eq("SFW", true)
-    .order("rating", { ascending: false })
-    .range(0, 19);
+  const getCachedTrendingAnime = unstable_cache(
+    fetchTrendingAnime,
+    ["trending-anime"], // You can adjust the keyParts as needed
+    { revalidate: 3600 } // Cache for 1 hour (3600 seconds)
+  );
+
+  const trendingAnime = await getCachedTrendingAnime();
+
+  const fetchTopAnime = async () => {
+    let { data: animesTopTen, error: errorTopTen } = await supabase
+      .from("anime")
+      .select("*,anime-genre(anime_id,Genre_id),genre(id,genrename)")
+      .eq("SFW", true)
+      .order("rating", { ascending: false })
+      .range(0, 19);
+    return animesTopTen;
+  };
+
+  const getCachedTopAnime = unstable_cache(
+    fetchTopAnime,
+    ["top-anime"], // You can adjust the keyParts as needed
+    { revalidate: 3600 } // Cache for 1 hour (3600 seconds)
+  );
+
+  const topAnime = await getCachedTopAnime();
+  // let { data: animesTopTen, error: errorTopTen } = await supabase
+  //   .from("anime")
+  //   .select("*,anime-genre(anime_id,Genre_id),genre(id,genrename)")
+  //   .eq("SFW", true)
+  //   .order("rating", { ascending: false })
+  //   .range(0, 19);
   // setAnime(anime);
   // setLoading(false);
   // console.log(animes);
@@ -27,13 +56,13 @@ export default async function Home() {
   //   console.log(anime);
   // });
   return (
-    <div>
+    <div className="max-w-md w-full mx-auto">
       {/* <CarouselDemo /> */}
       {/* <CarouselHighlight animes={animes} /> */}
-      <div className="font-bold px-2 py-4">Trending</div>
-      <CarouselPlugin animes={animesTrending} />
-      <div className="font-bold px-2 py-4">Top Rating</div>
-      <TopTenSection animes={animesTopTen} />
+      <div className="text-xl font-bold px-2 py-4">Trending</div>
+      <CarouselPlugin animes={trendingAnime} />
+      <div className="text-xl font-bold px-2 pt-4">Top Rating</div>
+      <TopAnimesSection animes={topAnime} />
     </div>
   );
 }
