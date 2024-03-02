@@ -19,9 +19,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className="w-screen">
+      <body className="max-w-sm mx-auto">
         <Providers>{children}</Providers>
-        <Bottomnavbar></Bottomnavbar>
+        <Bottomnavbar />
       </body>
     </html>
   );
