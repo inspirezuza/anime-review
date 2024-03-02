@@ -1,6 +1,7 @@
 import AnimeComments from "@/components/component/AnimeComments";
 import NewComment from "@/components/component/NewComment";
 import { createClient } from "@/utils/supabase/server";
+import { unstable_cache } from "next/cache";
 
 import { cookies } from "next/headers";
 
@@ -10,10 +11,20 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  let { data: anime, error: animeError } = await supabase
-    .from("anime")
-    .select("*")
-    .eq("id", params.slug);
+  const fetchAnime = async () => {
+    let { data: anime, error: animeError } = await supabase
+      .from("anime")
+      .select("*")
+      .eq("id", params.slug);
+    return anime;
+  };
+  const getCachedAnime = unstable_cache(
+    fetchAnime,
+    [params.slug], // You can adjust the keyParts as needed
+    { revalidate: 3600 } // Cache for 1 hour (3600 seconds)
+  );
+
+  const anime = await getCachedAnime();
 
   let { data: rawcomments, error: commentError } = await supabase
     .from("comments")
@@ -39,10 +50,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
           : 0,
       isAuthor: comment.author.id === user?.id,
     })) ?? [];
-
-  if (animeError) {
-    console.log(animeError);
-  }
 
   if (commentError) {
     console.log(commentError);
