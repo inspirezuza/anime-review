@@ -10,13 +10,14 @@ import {
 } from "@/components/ui/carousel";
 import Image from "next/image";
 import Link from "next/link";
+import Autoplay from "embla-carousel-autoplay";
 
 export function CarouselPlugin({ animes }: any) {
   const novelcount = animes.length;
   console.log(novelcount);
 
   return (
-    <Carousel className="" opts={{ align: "center", loop: true }}>
+    <Carousel opts={{ align: "center", loop: true }}>
       <CarouselContent>
         {/* {Array.from({ length: novelcount }).map((_, index) => ( */}
         {animes.map((anime: any, index: number) => (

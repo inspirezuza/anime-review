@@ -25,6 +25,6 @@ export default function SwitchTheme() {
           <IoMoonOutline className={className} />
         )
       }
-    ></Switch>
+    />
   );
 }

@@ -4,6 +4,14 @@ import { createClient } from "@/utils/supabase/server";
 import { unstable_cache } from "next/cache";
 import TopAnimesSection from "../components/component/TopAnimesSection";
 
+import dynamic from "next/dynamic";
+const SwitchTheme = dynamic(
+  () => import("@/components/component/switchtheme"),
+  {
+    ssr: false,
+  }
+);
+
 export default async function Home() {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
@@ -45,13 +53,18 @@ export default async function Home() {
   const topAnime = await getCachedTopAnime();
 
   return (
-    <div className="max-w-md w-full mx-auto">
-      {/* <CarouselDemo /> */}
-      {/* <CarouselHighlight animes={animes} /> */}
-      <div className="text-xl font-bold px-2 py-4">Trending</div>
-      <CarouselPlugin animes={trendingAnime} />
-      <div className="text-xl font-bold px-2 pt-4">Top Rating</div>
-      <TopAnimesSection animes={topAnime} />
-    </div>
+    <>
+      <div className="absolute top-4 right-1">
+        <SwitchTheme />
+      </div>
+      <div className="max-w-md w-full mx-auto">
+        {/* <CarouselDemo /> */}
+        {/* <CarouselHighlight animes={animes} /> */}
+        <div className="text-xl font-bold px-2 py-4">Trending</div>
+        <CarouselPlugin animes={trendingAnime} />
+        <div className="text-xl font-bold px-2 pt-4">Top Rating</div>
+        <TopAnimesSection animes={topAnime} />
+      </div>
+    </>
   );
 }

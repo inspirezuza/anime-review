@@ -31,14 +31,14 @@ export default async function Countcard(data: { user: any }) {
     return count;
   };
   return (
-    <div className="w-screen">
+    <div className="w-full">
       <div className="grid grid-cols-2 ">
         <div>
-          <div className=" text-center">Bookmark</div>
+          <div className="font-semibold text-center">Bookmark</div>
           <div className=" text-center">{getbookmarkcount()}</div>
         </div>
         <div>
-          <div className="text-center">Comment</div>
+          <div className="font-semibold text-center">Comment</div>
           <div className="text-center">{getcommentcount()}</div>
         </div>
       </div>

@@ -1,6 +1,8 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
+import { Button } from "../ui/button";
+import { FaGithub } from "react-icons/fa";
 
 export async function GithubButton() {
   const supabase = createClient();
@@ -12,7 +14,13 @@ export async function GithubButton() {
   };
   return (
     <>
-      <button onClick={githubSignIn}>Github</button>
+      <Button
+        className="flex gap-2 justify-center items-center"
+        onClick={githubSignIn}
+      >
+        <FaGithub />
+        Login Github
+      </Button>
     </>
   );
 }
@@ -26,9 +34,9 @@ export async function LogoutButton() {
   };
   return (
     <>
-      <button className="text-xs text-gray-400" onClick={handleSignOut}>
+      <Button className="text-xs" onClick={handleSignOut}>
         Logout
-      </button>
+      </Button>
     </>
   );
 }

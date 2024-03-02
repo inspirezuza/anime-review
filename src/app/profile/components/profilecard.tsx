@@ -5,7 +5,7 @@ import React from "react";
 import { Avatar } from "@nextui-org/react";
 export default function Profilecard(data: { user: any }) {
   return (
-    <div className="w-screen ">
+    <div className="w-full">
       <div className="flex flex-col items-center">
         <div className=" mt-10">
           <div className="flex gap-3 items-center">
@@ -17,7 +17,7 @@ export default function Profilecard(data: { user: any }) {
             />
           </div>
         </div>
-        <div className="w-screen flex flex-col items-center my-5">
+        <div className="w-full flex flex-col items-center my-5">
           <h1 className=" text-lg font-bold">
             {data.user?.user_metadata.preferred_username}
           </h1>
