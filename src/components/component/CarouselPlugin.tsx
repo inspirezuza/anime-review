@@ -30,6 +30,7 @@ export function CarouselPlugin({ animes }: any) {
                     fill={true}
                     className="rounded-xl transition-transform transform hover:opacity-90"
                     priority={true}
+                    sizes="(max-width: 192px) 100vw, (max-width: 256px) 50vw, 33vw"
                   />
                 </div>
                 <div className="line-clamp-2 text-center text-md">

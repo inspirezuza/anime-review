@@ -61,6 +61,7 @@ export default function TopAnimesSection({ animes }: any) {
                     fill={true}
                     alt={anime.title}
                     className=" object-cover rounded-xl hover:opacity-80"
+                    sizes="(max-width: 128px) 100vw, (max-width: 192px) 50vw, 33vw"
                   ></Image>
                 </div>
               </Link>
