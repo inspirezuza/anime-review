@@ -21,10 +21,11 @@ export default async function Profile() {
   if (!data.user) redirect("/login");
   return (
     <>
-      <div className="absolute top-4 right-4">
+      <div className="flex justify-between items-center p-4 bg-slate-50 dark:bg-black border-b-2">
+        <div className="text-xl font-bold">Profile</div>
         <SwitchTheme />
       </div>
-      <div className="max-w-sm mx-auto w-full">
+      <div className="max-w-sm mx-auto w-full h-screen overflow-hidden">
         {data.user && <Profilecard user={data.user} />}
         {data.user && (
           <div className=" ">
