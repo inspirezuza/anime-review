@@ -43,18 +43,7 @@ export default async function Home() {
   );
 
   const topAnime = await getCachedTopAnime();
-  // let { data: animesTopTen, error: errorTopTen } = await supabase
-  //   .from("anime")
-  //   .select("*,anime-genre(anime_id,Genre_id),genre(id,genrename)")
-  //   .eq("SFW", true)
-  //   .order("rating", { ascending: false })
-  //   .range(0, 19);
-  // setAnime(anime);
-  // setLoading(false);
-  // console.log(animes);
-  // animes?.map((anime: any) => {
-  //   console.log(anime);
-  // });
+
   return (
     <div className="max-w-md w-full mx-auto">
       {/* <CarouselDemo /> */}
