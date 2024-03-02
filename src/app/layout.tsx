@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { Providers } from "./providers";
 import Bottomnavbar from "../components/component/Navbar";
 import { Navbar } from "@nextui-org/react";
+import { ThemeProvider } from "@/components/component/theme-provider";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -20,8 +21,15 @@ export default function RootLayout({
   return (
     <html lang="en" className="">
       <body className="">
-        <Providers>{children}</Providers>
-        <Bottomnavbar />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Providers>{children}</Providers>
+          <Bottomnavbar />
+        </ThemeProvider>
       </body>
     </html>
   );

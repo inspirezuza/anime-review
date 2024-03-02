@@ -105,7 +105,7 @@ export default function Bottomnavbar() {
           Settings
           <div className="tooltip-arrow" data-popper-arrow></div>
         </div>
-        <Link href="\login">
+        <Link href="\profile">
           <button
             data-tooltip-target="tooltip-profile"
             type="button"
