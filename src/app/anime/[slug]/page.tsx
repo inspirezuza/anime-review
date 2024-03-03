@@ -120,7 +120,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
               sizes="(max-width: 128px) 100vw, (max-width: 192px) 50vw, 33vw"
             />
           </div>
-          <h1 className="text-lg font-bold pt-2">{anime?.[0].title}</h1>
+          <h1 className="text-lg font-bold pt-2 text-center max-w-xs">
+            {anime?.[0].title}
+          </h1>
           <div className="font-semibold text-xs pb-2">
             {anime?.[0].studio[0].studioname}
           </div>
