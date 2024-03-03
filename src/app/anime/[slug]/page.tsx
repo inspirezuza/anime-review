@@ -5,6 +5,7 @@ import { Ratings } from "@/components/component/Ratings";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/utils/supabase/server";
 import { unstable_cache } from "next/cache";
+import Bookbutton from "./component/bookbutton";
 
 import { cookies } from "next/headers";
 import Image from "next/image";
@@ -14,6 +15,7 @@ import { FaSquareUpRight } from "react-icons/fa6";
 import { FaBookBookmark } from "react-icons/fa6";
 
 import dynamic from "next/dynamic";
+import { Book } from "lucide-react";
 const SwitchTheme = dynamic(
   () => import("@/components/component/switchtheme"),
   {
@@ -65,13 +67,20 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   const anime = (await getCachedAnime()) as any;
 
-  console.log(anime);
+  // console.log(anime);
 
-  console.log(anime?.[0]?.genre || []);
+  // console.log(anime?.[0]?.genre || []);
 
   let { data: comments, error } = (await supabase
     .from("comments")
     .select(`*, profiles(id,username,avatar_url)`)) as any;
+
+  let { data: bookmarkstatus } = (await supabase
+    .from("bookmarks")
+    .select("*")
+    .eq("anime_id", params.slug)
+    .eq("user_id", user?.id)) as any;
+  console.log(user?.id, params.slug, bookmarkstatus.length);
   // let { data: rawcomments, error: commentError } = await supabase
   //   .from("comments")
   //   .select(
@@ -145,12 +154,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 </div>
               </Button>
             </Link>
-            <Button variant="outline">
-              <div className="flex gap-0 justify-center items-center">
-                <FaBookBookmark />
-                <div className="pb-1 pl-1">BookMark</div>
-              </div>
-            </Button>
+            <Bookbutton
+              bookmarkstatus={bookmarkstatus.length}
+              anime_id={params.slug}
+              user_id={user?.id}
+            />
           </div>
         </div>
 
