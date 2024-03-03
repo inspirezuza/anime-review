@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Anime Review Web Application
+
+As a part of 01204351-65 Database System subject at the Computer Engineering department of Kasetsart University
+
+This project is web application similar to MyAnimeList. The application allows students to manage their anime watchlist, keep track of watched episodes, and discover new anime titles. It's built with Next.js, Tailwind CSS, Shadcn UI, and Supabase.
+
+
+**Deploy (Look best on mobile!):** https://anime-review.vercel.app/
+
+**Presentation:** https://www.canva.com/design/DAF-f7VsPG8/CFuLs3t7tLG71vs-3ZzIpw/edit?utm_content=DAF-f7VsPG8&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+
+## Features
+
+- **User Authentication**: Users can sign up, log in, and log out securely using Supabase authentication.
+- **Anime Listing**: Users can browse through a vast collection of anime titles fetched from an API or database.
+- **Bookmark Management**: Users can add anime to their Bookmark and mark them as watched or favorite.
+- **Search and Filters**: Users can search for specific anime titles and apply filters based on genres, ratings, and release years.
+- **Responsive Design**: The application is designed to be responsive, ensuring a seamless experience across devices.
+- **Comments and likes**: Users can comment on any anime and also can like other people comment. 
+- **Dark Mode**: The application supports a dark mode feature for improved readability and reduced eye strain.
+
+## Technologies Used
+
+- **Next.js**: Next.js is a React framework for building server-side rendered and statically generated web applications.
+- **Tailwind CSS**: Tailwind CSS is a utility-first CSS framework for quickly building custom designs without writing CSS.
+- **Shadcn UI**: Shadcn UI is a UI component library built on top of Tailwind CSS, providing pre-designed components for faster development.
+- **Supabase**: Supabase is an open-source alternative to Firebase, providing authentication, database, and storage services.
+- **Flowbite and Next UI** both are UI component libary we use secondary after shadcn ui. 
 
 ## Getting Started
 
-First, run the development server:
+To get started with this project, follow these steps:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. **Clone the Repository**: Clone this repository to your local machine using `git clone`.
+2. **Install Dependencies**: Navigate to the project directory and install the dependencies using `npm install`.
+3. **Set Up Supabase**: Sign up for a Supabase account and create a new project. Configure authentication and database settings according to your requirements. Retrieve your Supabase URL and API key.
+4. **Environment Variables**: Create a `.env.local` file in the root directory of the project and add the following environment variables:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+    ```
+    NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_api_key
+    ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+5. **Run the Application**: Start the development server using `npm run dev`.
+6. **Access the Application**: Open your web browser and navigate to `http://localhost:3000` to access the application.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## License
 
-## Learn More
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-To learn more about Next.js, take a look at the following resources:
+## Acknowledgements
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- This project was inspired by [MyAnimeList](https://myanimelist.net/).
+- Special thanks to the creators and maintainers of Next.js, Tailwind CSS, Shadcn UI, and Supabase for their amazing tools and libraries.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+Feel free to customize this README according to your project's specific details and requirements. If you have any questions or need further assistance, don't hesitate to reach out!
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Our Team
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. 6510503581 นายพลพล พัวกาหลง
+2. 6510503611 นายพัทธดนย์ ตันติเอมอร
+3. 6510503671 นายภาณุพงศ์ เลิศวีรนนทรัตน์
+4. 6510503778 นายวีรภัทร์ อุ่นอบ
+5. 6510503786 นายศักย์ศรณ์ มาลาสุทธิชัย
+
+
+## Screenshots
+
+![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
