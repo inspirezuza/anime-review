@@ -13,6 +13,14 @@ import Link from "next/link";
 import { FaSquareUpRight } from "react-icons/fa6";
 import { FaBookBookmark } from "react-icons/fa6";
 
+import dynamic from "next/dynamic";
+const SwitchTheme = dynamic(
+  () => import("@/components/component/switchtheme"),
+  {
+    ssr: false,
+  }
+);
+
 export default async function Page({ params }: { params: { slug: string } }) {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
@@ -22,7 +30,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const fetchAnime = async () => {
     let { data: anime, error: animeError } = await supabase
       .from("anime")
-      .select(`*,anime-genre(anime_id,Genre_id),genre!inner(id,genrename)`)
+      .select(
+        `*,anime-studio(anime_id,studio_id),studio!inner(id,studioname),anime-genre(anime_id,Genre_id),genre!inner(id,genrename)`
+      )
       .eq("id", params.slug);
     if (!animeError) {
       return anime;
@@ -72,9 +82,12 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <>
+      <div className="absolute top-4 right-1">
+        <SwitchTheme />
+      </div>
       <div className={`mx-auto max-w-md h-[60vh] w-full`}>
         {/* <div className=" backdrop-blur-md bg-black/30"></div> */}
-        <div className="flex flex-col justify-center items-center w-full p-4 pt-16 pb-8 bg-slate-100">
+        <div className="flex flex-col justify-center items-center w-full p-4 pt-16 pb-8 bg-slate-100 dark:bg-slate-950">
           <div className="relative h-48 w-32 mx-auto rounded-lg">
             <Image
               src={anime?.[0].main_picture}
@@ -86,7 +99,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </div>
           <h1 className="text-lg font-bold pt-2">{anime?.[0].title}</h1>
           <div className="font-semibold text-xs pb-2">
-            Rating: {anime?.[0].rating}/10
+            {anime?.[0].studio[0].studioname}
           </div>
           <Ratings size={20} rating={anime?.[0].rating / 2} variant="yellow" />
           {/* <p>{anime?.[0].url}</p> */}
