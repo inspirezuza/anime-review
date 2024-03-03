@@ -21,6 +21,21 @@ const SwitchTheme = dynamic(
   }
 );
 
+function extractVideoId(url: string): string | null {
+  const regex = /[?&]([^=#]+)=([^&#]*)/g;
+  let match;
+  let videoId = null;
+
+  while ((match = regex.exec(url)) !== null) {
+    if (match[1] === "v") {
+      videoId = match[2];
+      break;
+    }
+  }
+
+  return videoId;
+}
+
 export default async function Page({ params }: { params: { slug: string } }) {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
@@ -31,11 +46,15 @@ export default async function Page({ params }: { params: { slug: string } }) {
     let { data: anime, error: animeError } = await supabase
       .from("anime")
       .select(
-        `*,anime-studio(anime_id,studio_id),studio!inner(id,studioname),anime-genre(anime_id,Genre_id),genre!inner(id,genrename)`
+        `*,anime-studio(anime_id,studio_id),studio!inner(id,studioname),
+        anime-genre(anime_id,Genre_id),genre!inner(id,genrename)`
       )
       .eq("id", params.slug);
     if (!animeError) {
+      console.log(anime, animeError);
       return anime;
+    } else {
+      console.log("error", animeError);
     }
   };
   const getCachedAnime = unstable_cache(
@@ -48,7 +67,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   console.log(anime);
 
-  // console.log(anime?.[0]?.genre || []);
+  console.log(anime?.[0]?.genre || []);
+
+  let { data: comments, error } = (await supabase
+    .from("comments")
+    .select(`*, profiles(id,username,avatar_url)`)) as any;
   // let { data: rawcomments, error: commentError } = await supabase
   //   .from("comments")
   //   .select(
@@ -87,7 +110,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
       </div>
       <div className={`mx-auto max-w-md h-[60vh] w-full`}>
         {/* <div className=" backdrop-blur-md bg-black/30"></div> */}
-        <div className="flex flex-col justify-center items-center w-full p-4 pt-16 pb-8 bg-slate-100 dark:bg-slate-950">
+        <div className="flex flex-col justify-center items-center w-full p-4 pt-16 ">
           <div className="relative h-48 w-32 mx-auto rounded-lg">
             <Image
               src={anime?.[0].main_picture}
@@ -135,10 +158,27 @@ export default async function Page({ params }: { params: { slug: string } }) {
         <div className="p-4">
           <div className="text-lg font-bold">Description</div>
           <AnimeDescription description={anime?.[0].description} />
+
+          {anime?.[0].TrailerURL ? (
+            <div>
+              <div className="text-lg font-bold pt-4">Trailer</div>
+              <div className="w-full">
+                <iframe
+                  src={`https://www.youtube.com/embed/${extractVideoId(
+                    anime?.[0].TrailerURL
+                  )}`}
+                  className="w-full h-60 "
+                />
+              </div>
+            </div>
+          ) : (
+            <div>asdf</div>
+          )}
         </div>
+
         {/* <div>{anime?.[0].description}</div> */}
-        {/* <NewComment anime_id={params.slug} /> */}
-        {/* <AnimeComments comments={comments} /> */}
+        {/* <NewComment anime_id={params.slug} />
+        <AnimeComments comments={comments} /> */}
       </div>
     </>
   );
