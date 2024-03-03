@@ -2,7 +2,7 @@
 
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
-
+import { FaTrashAlt } from "react-icons/fa";
 export default function CommentDelete({ comment }: any) {
   const router = useRouter();
 
@@ -23,8 +23,12 @@ export default function CommentDelete({ comment }: any) {
       {comment.isAuthor ? (
         // <form action={handleDelete}>
         //   <input name="itemId" className="hidden" defaultValue={comment.id} />
-        <button onClick={handleDelete} type="submit" className="text-red-600">
-          Delete
+        <button
+          onClick={handleDelete}
+          type="submit"
+          className="text-foreground-500"
+        >
+          <FaTrashAlt size={14} />
         </button>
       ) : (
         // </form>

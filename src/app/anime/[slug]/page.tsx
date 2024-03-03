@@ -12,10 +12,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { FaSquareUpRight } from "react-icons/fa6";
-import { FaBookBookmark } from "react-icons/fa6";
 
 import dynamic from "next/dynamic";
-import { Book } from "lucide-react";
 const SwitchTheme = dynamic(
   () => import("@/components/component/switchtheme"),
   {
@@ -71,16 +69,42 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   // console.log(anime?.[0]?.genre || []);
 
-  let { data: comments, error } = (await supabase
-    .from("comments")
-    .select(`*, profiles(id,username,avatar_url)`)) as any;
-
   let { data: bookmarkstatus } = (await supabase
     .from("bookmarks")
     .select("*")
     .eq("anime_id", params.slug)
     .eq("user_id", user?.id)) as any;
-  console.log(user?.id, params.slug, bookmarkstatus.length);
+
+  let { data: rawcomments, error: commentError } = await supabase
+    .from("comments")
+    .select("*, author: profiles(*), likes(*)")
+    .order("created_at", { ascending: false })
+    .eq("anime_id", params.slug)
+    .range(0, 9);
+
+  console.log(commentError);
+  console.log(rawcomments);
+
+  const comments =
+    rawcomments?.map((comment) => ({
+      ...comment,
+      author: Array.isArray(comment.author)
+        ? comment.author[0]
+        : comment.author,
+      user_has_liked_comment:
+        (comment.likes &&
+          Array.isArray(comment.likes) &&
+          comment.likes.some((like: any) => like.user_id === user?.id)) ||
+        false,
+      likes:
+        comment.likes && Array.isArray(comment.likes)
+          ? comment.likes.length
+          : 0,
+      isAuthor: comment.author.id === user?.id,
+    })) ?? [];
+
+  console.log(comments);
+
   // let { data: rawcomments, error: commentError } = await supabase
   //   .from("comments")
   //   .select(
@@ -182,13 +206,16 @@ export default async function Page({ params }: { params: { slug: string } }) {
               </div>
             </div>
           ) : (
-            <div>asdf</div>
+            <div></div>
           )}
         </div>
-
-        {/* <div>{anime?.[0].description}</div> */}
-        {/* <NewComment anime_id={params.slug} />
-        <AnimeComments comments={comments} /> */}
+        <div className="p-4">
+          <div className=" text-lg font-bold pt-4 pb-2">Comment</div>
+          <NewComment anime_id={params.slug} />
+        </div>
+        <div className="pt-4 px-0 border-b-2"></div>
+        <AnimeComments comments={comments} />
+        <div className="pt-24"></div>
       </div>
     </>
   );
