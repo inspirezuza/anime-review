@@ -117,26 +117,24 @@ export default function Home() {
   };
   return (
     <>
-      <div className="w-screen bg-black max-w-screen overflow-x-hidden overflow-y-auto">
+      <div className="max-w-md w-full mx-auto overflow-x-hidden overflow-y-auto">
         <div className="w-screen my-1 px-2 flex justify-end">
           <Button variant="flat" className="capitalize" onPress={onOpen}>
             Filter
           </Button>
         </div>
 
-        <div className="flex justify-center flex-col items-center">
-          <div>
-            <div className="flex w-full flex-wrap md:flex-nowrap">
-              <Input
-                isClearable
-                type="text"
-                value={searchtext}
-                onChange={searchAnime}
-                onClear={searchAnime}
-                onValueChange={setSearchText}
-                startContent={<IoIosSearch />}
-              />
-            </div>
+        <div className="flex pt-4 px-8 justify-center flex-col items-center">
+          <div className="flex w-full flex-wrap md:flex-nowrap">
+            <Input
+              isClearable
+              type="text"
+              value={searchtext}
+              onChange={searchAnime}
+              onClear={searchAnime}
+              onValueChange={setSearchText}
+              startContent={<IoIosSearch />}
+            />
           </div>
           <div className="w-[22rem]">
             <div className="flex flex-wrap gap-3 w-full max-w-screen overflow-auto my-[1rem]">

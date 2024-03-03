@@ -12,9 +12,11 @@ export function AnimeDescription({ description }: any) {
     <>
       <div className="indent-8 text-sm text-justify">
         {showMore ? (
-          <div className="line-clamp-4">{description}</div>
+          <div>
+            <div>{description}</div>
+          </div>
         ) : (
-          <div>{description}</div>
+          <div className="line-clamp-4">{description}</div>
         )}
       </div>
       <button
