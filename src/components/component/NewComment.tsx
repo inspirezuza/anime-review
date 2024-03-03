@@ -4,6 +4,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { revalidatePath } from "next/cache";
 import Link from "next/link";
+import SubmitNewComment from "./SubmitNewComment";
 
 export default async function NewComment({ anime_id }: { anime_id: string }) {
   const cookieStore = cookies();
@@ -37,8 +38,8 @@ export default async function NewComment({ anime_id }: { anime_id: string }) {
           className="flex justify-center w-full max-w-md items-center space-x-2"
           action={addTweet}
         >
-          <Input name="title" placeholder="Add new comment!" />
-          <Button type="submit">submit</Button>
+          <Input required name="title" placeholder="Add new comment!" />
+          <SubmitNewComment />
         </form>
       ) : (
         <Link className="" href={"/login"}>
