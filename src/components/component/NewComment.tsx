@@ -42,7 +42,7 @@ export default async function NewComment({ anime_id }: { anime_id: string }) {
         </form>
       ) : (
         <Link className="" href={"/login"}>
-          <Button className="w-full max-w-md mx-auto p-4">
+          <Button variant="secondary" className="w-full max-w-md mx-auto p-4">
             login to comment
           </Button>
         </Link>
