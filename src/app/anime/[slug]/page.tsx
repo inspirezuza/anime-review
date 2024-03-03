@@ -11,6 +11,7 @@ import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 
+import { FaBookBookmark } from "react-icons/fa6";
 import { FaSquareUpRight } from "react-icons/fa6";
 
 import dynamic from "next/dynamic";
@@ -180,11 +181,22 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 </div>
               </Button>
             </Link>
-            <Bookbutton
-              bookmarkstatus={bookmarkstatus.length}
-              anime_id={params.slug}
-              user_id={user?.id}
-            />
+            {bookmarkstatus ? (
+              <Bookbutton
+                bookmarkstatus={bookmarkstatus.length}
+                anime_id={params.slug}
+                user_id={user?.id}
+              />
+            ) : (
+              <Link href={"/login"}>
+                <Button variant={"outline"}>
+                  <div className="flex gap-0 justify-center items-center">
+                    <FaBookBookmark />
+                    <div className="pb-1 pl-1">BookMark</div>
+                  </div>
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
 

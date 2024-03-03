@@ -4,13 +4,16 @@ import CommentLike from "@/components/component/CommentLike";
 import Image from "next/image";
 import { cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
-import { useRouter } from "next/navigation";
 import CommentDelete from "./CommentDelete";
 import Link from "next/link";
 
 dayjs.extend(relativeTime);
 
-export default function AnimeComments({ comments }: { comments: any[] }) {
+export default async function AnimeComments({ comments }: { comments: any[] }) {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+  const { data: user, error } = await supabase.auth.getUser();
+
   const handleDelete = async (data: FormData) => {
     "use server";
     const itemId = data.get("itemId");
@@ -26,15 +29,17 @@ export default function AnimeComments({ comments }: { comments: any[] }) {
       {comments?.map((comment) => (
         <div className="p-2 py-4 border-b-2" key={comment.id}>
           <div className="flex">
-            <div className="h-12 w-12 pt-1">
-              <Image
-                className="rounded-full"
-                src={comment.author.avatar_url}
-                alt="comment user avatar"
-                width={48}
-                height={48}
-              />
-            </div>
+            <Link href={`https://github.com/${comment.author.username} `}>
+              <div className="h-12 w-12 ">
+                <Image
+                  className="rounded-full"
+                  src={comment.author.avatar_url}
+                  alt="comment user avatar"
+                  width={48}
+                  height={48}
+                />
+              </div>
+            </Link>
             <div className="flex flex-col px-2 w-full">
               <div className="flex justify-between items-center  w-full">
                 <div className="flex items-center align-middle gap-1">
@@ -53,7 +58,7 @@ export default function AnimeComments({ comments }: { comments: any[] }) {
               </div>
               <div className="pb-1">{comment.title}</div>
               <div className="flex gap-4">
-                <CommentLike comment={comment} />
+                <CommentLike comment={comment} user={user} />
               </div>
             </div>
           </div>
