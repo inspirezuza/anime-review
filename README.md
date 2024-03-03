@@ -72,4 +72,5 @@ Feel free to customize this README according to your project's specific details 
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![image](https://github.com/inspirezuza/anime-review/assets/102022496/65aaa580-cf20-4ad7-b4bb-e374bc07f54c)
+
