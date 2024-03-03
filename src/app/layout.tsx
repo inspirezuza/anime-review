@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Providers } from "./providers";
+import Bottomnavbar from "../components/component/Navbar";
+import { Navbar } from "@nextui-org/react";
+import { ThemeProvider } from "@/components/component/theme-provider";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -16,9 +19,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
-      <body>
-        <Providers>{children}</Providers>
+    <html lang="en" className="">
+      <body className="">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Providers>
+            {children}
+            <Bottomnavbar />
+          </Providers>
+        </ThemeProvider>
       </body>
     </html>
   );

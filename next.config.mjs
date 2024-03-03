@@ -5,6 +5,11 @@ const nextConfig = {
       {
         hostname: "avatars.githubusercontent.com",
       },
+      {
+        protocol: "https",
+        hostname: "cdn.myanimelist.net",
+        port: "",
+      },
     ],
   },
 };
