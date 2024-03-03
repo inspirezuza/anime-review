@@ -11,11 +11,10 @@ import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 
-import { FaSquareUpRight } from "react-icons/fa6";
 import { FaBookBookmark } from "react-icons/fa6";
+import { FaSquareUpRight } from "react-icons/fa6";
 
 import dynamic from "next/dynamic";
-import { Book } from "lucide-react";
 const SwitchTheme = dynamic(
   () => import("@/components/component/switchtheme"),
   {
@@ -53,7 +52,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
       )
       .eq("id", params.slug);
     if (!animeError) {
-      console.log(anime, animeError);
       return anime;
     } else {
       console.log("error", animeError);
@@ -67,50 +65,36 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   const anime = (await getCachedAnime()) as any;
 
-  // console.log(anime);
-
-  // console.log(anime?.[0]?.genre || []);
-
-  let { data: comments, error } = (await supabase
-    .from("comments")
-    .select(`*, profiles(id,username,avatar_url)`)) as any;
-
   let { data: bookmarkstatus } = (await supabase
     .from("bookmarks")
     .select("*")
     .eq("anime_id", params.slug)
     .eq("user_id", user?.id)) as any;
-  console.log(user?.id, params.slug, bookmarkstatus.length);
-  // let { data: rawcomments, error: commentError } = await supabase
-  //   .from("comments")
-  //   .select(
-  //     "*, author: profiles!public_comment_user_id_fkey(*), likes: comment_likes!comment_likes(user_id)"
-  //   )
-  //   .eq("anime_id", params.slug)
-  //   .order("created_at", { ascending: false })
-  //   .range(0, 9);
 
-  // const comments =
-  //   rawcomments?.map((comment) => ({
-  //     ...comment,
-  //     author: Array.isArray(comment.author)
-  //       ? comment.author[0]
-  //       : comment.author,
-  //     user_has_liked_comment:
-  //       (comment.likes &&
-  //         Array.isArray(comment.likes) &&
-  //         comment.likes.some((like: any) => like.user_id === user?.id)) ||
-  //       false,
-  //     likes:
-  //       comment.likes && Array.isArray(comment.likes)
-  //         ? comment.likes.length
-  //         : 0,
-  //     isAuthor: comment.author.id === user?.id,
-  //   })) ?? [];
+  let { data: rawcomments, error: commentError } = await supabase
+    .from("comments")
+    .select("*, author: profiles(*), likes(*)")
+    .order("created_at", { ascending: false })
+    .eq("anime_id", params.slug)
+    .range(0, 9);
 
-  // if (commentError) {
-  //   console.log(commentError);
-  // }
+  const comments =
+    rawcomments?.map((comment) => ({
+      ...comment,
+      author: Array.isArray(comment.author)
+        ? comment.author[0]
+        : comment.author,
+      user_has_liked_comment:
+        (comment.likes &&
+          Array.isArray(comment.likes) &&
+          comment.likes.some((like: any) => like.user_id === user?.id)) ||
+        false,
+      likes:
+        comment.likes && Array.isArray(comment.likes)
+          ? comment.likes.length
+          : 0,
+      isAuthor: comment.author.id === user?.id,
+    })) ?? [];
 
   return (
     <>
@@ -129,7 +113,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
               sizes="(max-width: 128px) 100vw, (max-width: 192px) 50vw, 33vw"
             />
           </div>
-          <h1 className="text-lg font-bold pt-2">{anime?.[0].title}</h1>
+          <h1 className="text-lg font-bold pt-2 text-center max-w-xs">
+            {anime?.[0].title}
+          </h1>
           <div className="font-semibold text-xs pb-2">
             {anime?.[0].studio[0].studioname}
           </div>
@@ -154,11 +140,22 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 </div>
               </Button>
             </Link>
-            <Bookbutton
-              bookmarkstatus={bookmarkstatus.length}
-              anime_id={params.slug}
-              user_id={user?.id}
-            />
+            {bookmarkstatus ? (
+              <Bookbutton
+                bookmarkstatus={bookmarkstatus.length}
+                anime_id={params.slug}
+                user_id={user?.id}
+              />
+            ) : (
+              <Link href={"/login"}>
+                <Button variant={"outline"}>
+                  <div className="flex gap-0 justify-center items-center">
+                    <FaBookBookmark />
+                    <div className="pb-1 pl-1">BookMark</div>
+                  </div>
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
 
@@ -180,13 +177,16 @@ export default async function Page({ params }: { params: { slug: string } }) {
               </div>
             </div>
           ) : (
-            <div>asdf</div>
+            <div></div>
           )}
         </div>
-
-        {/* <div>{anime?.[0].description}</div> */}
-        {/* <NewComment anime_id={params.slug} />
-        <AnimeComments comments={comments} /> */}
+        <div className="p-4">
+          <div className=" text-lg font-bold pt-4 pb-2">Comment</div>
+          <NewComment anime_id={params.slug} />
+        </div>
+        <div className="pt-4 px-0 border-b-2"></div>
+        <AnimeComments comments={comments} />
+        <div className="pt-24"></div>
       </div>
     </>
   );

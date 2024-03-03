@@ -18,7 +18,7 @@ export default async function Profile() {
         <div className=" ">
           <Countcard user={data.user} />
           <div className="w-screen flex justify-center my-10">
-            <div className="w-[5rem] h-[3rem] bg-default  flex justify-center rounded-md">
+            <div className="flex justify-center">
               <LogoutButton />
             </div>
           </div>

@@ -1,15 +1,24 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { revalidatePath } from "next/cache";
+import Link from "next/link";
 
-export default function NewComment({ anime_id }: { anime_id: string }) {
+export default async function NewComment({ anime_id }: { anime_id: string }) {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   const addTweet = async (formData: FormData) => {
     "use server";
-    const title = String(formData.get("title"));
     const cookieStore = cookies();
     const supabase = createClient(cookieStore);
     const {
       data: { user },
     } = await supabase.auth.getUser();
+    const title = String(formData.get("title"));
     if (user) {
       const { data, error } = await supabase
         .from("comments")
@@ -18,12 +27,26 @@ export default function NewComment({ anime_id }: { anime_id: string }) {
 
       console.log("comment added");
     }
+    revalidatePath(`/anime/${anime_id}`);
   };
 
   return (
-    <form action={addTweet}>
-      <input name="title" className="bg-inherit" />
-      <button type="submit">submit</button>
-    </form>
+    <div>
+      {user ? (
+        <form
+          className="flex justify-center w-full max-w-md items-center space-x-2"
+          action={addTweet}
+        >
+          <Input name="title" placeholder="Add new comment!" />
+          <Button type="submit">submit</Button>
+        </form>
+      ) : (
+        <Link className="" href={"/login"}>
+          <Button variant="secondary" className="w-full max-w-md mx-auto p-4">
+            login to comment
+          </Button>
+        </Link>
+      )}
+    </div>
   );
 }

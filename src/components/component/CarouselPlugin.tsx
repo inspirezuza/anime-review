@@ -14,7 +14,6 @@ import Autoplay from "embla-carousel-autoplay";
 
 export function CarouselPlugin({ animes }: any) {
   const novelcount = animes.length;
-  console.log(novelcount);
 
   return (
     <Carousel opts={{ align: "center", loop: true }}>
