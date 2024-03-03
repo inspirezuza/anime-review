@@ -62,7 +62,7 @@ export default function Bottomnavbar() {
                 d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
               />
             </svg>
-            <span className="sr-only">Wallet</span>
+            <span className="sr-only">Search</span>
           </button>
         </Link>
         <div
@@ -73,7 +73,7 @@ export default function Bottomnavbar() {
           Wallet
           <div className="tooltip-arrow" data-popper-arrow></div>
         </div>
-        <Link href="\">
+        <Link href="/bookmark">
           <button
             data-tooltip-target="tooltip-settings"
             type="button"
@@ -94,7 +94,7 @@ export default function Bottomnavbar() {
                 d="m17 21-5-4-5 4V3.9c0-.2 0-.5.2-.6l.6-.3h8.4c.2 0 .4 0 .6.3l.2.6V21Z"
               />
             </svg>
-            <span className="sr-only">Settings</span>
+            <span className="sr-only">Bookmark</span>
           </button>
         </Link>
         <div
