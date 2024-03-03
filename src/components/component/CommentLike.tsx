@@ -25,7 +25,6 @@ export default function CommentLike({ comment, user }: any) {
       router.refresh();
     }
   };
-  console.log(user);
   return (
     <div>
       {user.user ? (

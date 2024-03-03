@@ -52,7 +52,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
       )
       .eq("id", params.slug);
     if (!animeError) {
-      console.log(anime, animeError);
       return anime;
     } else {
       console.log("error", animeError);
@@ -66,10 +65,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   const anime = (await getCachedAnime()) as any;
 
-  // console.log(anime);
-
-  // console.log(anime?.[0]?.genre || []);
-
   let { data: bookmarkstatus } = (await supabase
     .from("bookmarks")
     .select("*")
@@ -82,9 +77,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
     .order("created_at", { ascending: false })
     .eq("anime_id", params.slug)
     .range(0, 9);
-
-  console.log(commentError);
-  console.log(rawcomments);
 
   const comments =
     rawcomments?.map((comment) => ({
@@ -103,39 +95,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
           : 0,
       isAuthor: comment.author.id === user?.id,
     })) ?? [];
-
-  console.log(comments);
-
-  // let { data: rawcomments, error: commentError } = await supabase
-  //   .from("comments")
-  //   .select(
-  //     "*, author: profiles!public_comment_user_id_fkey(*), likes: comment_likes!comment_likes(user_id)"
-  //   )
-  //   .eq("anime_id", params.slug)
-  //   .order("created_at", { ascending: false })
-  //   .range(0, 9);
-
-  // const comments =
-  //   rawcomments?.map((comment) => ({
-  //     ...comment,
-  //     author: Array.isArray(comment.author)
-  //       ? comment.author[0]
-  //       : comment.author,
-  //     user_has_liked_comment:
-  //       (comment.likes &&
-  //         Array.isArray(comment.likes) &&
-  //         comment.likes.some((like: any) => like.user_id === user?.id)) ||
-  //       false,
-  //     likes:
-  //       comment.likes && Array.isArray(comment.likes)
-  //         ? comment.likes.length
-  //         : 0,
-  //     isAuthor: comment.author.id === user?.id,
-  //   })) ?? [];
-
-  // if (commentError) {
-  //   console.log(commentError);
-  // }
 
   return (
     <>
