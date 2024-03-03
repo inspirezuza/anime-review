@@ -24,8 +24,8 @@ export default async function BookMark() {
       </div>
       <div className="w-screen">
         {!data.user ? (
-          <div className="mt-[20rem] flex flex-col justify-center items-center">
-            <h1>{"Doesn't Login yet!"}</h1>
+          <div className="mt-[25vh] flex flex-col justify-center items-center">
+            <div className="p-4">{"Doesn't Login yet!"}</div>
             <Link href="/login">
               <Button>Login</Button>
             </Link>
