@@ -14,7 +14,7 @@ export default async function Countcard(data: { user: any }) {
       error,
       count,
     } = await supabase
-      .from("comments")
+      .from("bookmarks")
       .select("*", { count: "exact", head: true })
       .eq("user_id", data.user.id);
     return count;
@@ -25,7 +25,7 @@ export default async function Countcard(data: { user: any }) {
       error,
       count,
     } = await supabase
-      .from("bookmarks")
+      .from("comments")
       .select("*", { count: "exact", head: true })
       .eq("user_id", data.user.id);
     return count;
