@@ -19,6 +19,10 @@ This project is web application similar to MyAnimeList. The application allows s
 - **Comments and likes**: Users can comment on any anime and also can like other people comment. 
 - **Dark Mode**: The application supports a dark mode feature for improved readability and reduced eye strain.
 
+## Data Source
+
+The anime data for this project is sourced from the [MyAnimeList Anime Dataset](https://www.kaggle.com/datasets/andreuvallhernndez/myanimelist) available on Kaggle. This dataset contains comprehensive information about various anime titles, including their titles, genres, ratings, popularity, and more. The data is used to populate the anime listing and enable users to explore and discover new anime titles within the application.
+
 ## Technologies Used
 
 - **Next.js**: Next.js is a React framework for building server-side rendered and statically generated web applications.
