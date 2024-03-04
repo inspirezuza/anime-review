@@ -47,7 +47,11 @@ export default async function AnimeComments({ comments }: { comments: any[] }) {
                     className="flex gap-1"
                     href={`https://github.com/${comment.author.username} `}
                   >
-                    <p className="font-bold ">{`${comment.author.name}`}</p>
+                    <p className="font-bold ">{`${
+                      comment.author.name
+                        ? comment.author.name
+                        : comment.author.username
+                    }`}</p>
                     <div className="text-foreground-400 font-normal">{`@${comment.author.username}`}</div>
                   </Link>
                   <div className="text-foreground-400 font-normal">{`· ${dayjs(
