@@ -72,5 +72,6 @@ Feel free to customize this README according to your project's specific details 
 
 ## Screenshots
 
-![image](https://github.com/inspirezuza/anime-review/assets/102022496/65aaa580-cf20-4ad7-b4bb-e374bc07f54c)
+![image](https://github.com/inspirezuza/anime-review/assets/102022496/b4fe091d-1cfa-4d2f-914d-e5941d2cbef1)
+
 
