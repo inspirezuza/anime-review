@@ -1,5 +1,7 @@
 # Anime Review Web Application
 
+![image](https://github.com/inspirezuza/anime-review/assets/102022496/b4fe091d-1cfa-4d2f-914d-e5941d2cbef1)
+
 As a part of 01204351-65 Database System subject at the Computer Engineering department of Kasetsart University
 
 This project is web application similar to MyAnimeList. The application allows students to manage their anime watchlist, keep track of watched episodes, and discover new anime titles. It's built with Next.js, Tailwind CSS, Shadcn UI, and Supabase.
@@ -68,10 +70,4 @@ Feel free to customize this README according to your project's specific details 
 3. 6510503671 นายภาณุพงศ์ เลิศวีรนนทรัตน์
 4. 6510503778 นายวีรภัทร์ อุ่นอบ
 5. 6510503786 นายศักย์ศรณ์ มาลาสุทธิชัย
-
-
-## Screenshots
-
-![image](https://github.com/inspirezuza/anime-review/assets/102022496/b4fe091d-1cfa-4d2f-914d-e5941d2cbef1)
-
 
